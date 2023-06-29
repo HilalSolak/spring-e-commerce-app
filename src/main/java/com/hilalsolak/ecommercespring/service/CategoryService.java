@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface CategoryService {
     List<CategoryResponse> getAll();
     CategoryResponse getById(UUID id);
-    CategoryResponse createById(CategoryRequest request);
+    CategoryResponse create(CategoryRequest request);
     CategoryResponse updateById(UUID id, CategoryRequest request);
     void deleteById(UUID id);
 }

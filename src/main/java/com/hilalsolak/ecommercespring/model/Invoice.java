@@ -1,7 +1,8 @@
 package com.hilalsolak.ecommercespring.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
-
+@Entity
 public class Invoice extends BaseModel {
     private String description;
     @OneToOne

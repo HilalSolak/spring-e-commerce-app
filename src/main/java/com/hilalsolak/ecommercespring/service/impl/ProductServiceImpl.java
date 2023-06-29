@@ -8,10 +8,11 @@ import com.hilalsolak.ecommercespring.model.Product;
 import com.hilalsolak.ecommercespring.repository.ProductRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
 import com.hilalsolak.ecommercespring.service.ProductService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class ProductServiceImpl implements ProductService {
 
     private final CategoryService categoryService;
@@ -24,7 +25,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getAll() {
-        List<ProductResponse> response = repository.findAll().stream().map(ProductResponse::convert).toList();
+        List<ProductResponse> response = repository.findAll().stream()
+                .map(ProductResponse::convert)
+                .toList();
 
         return response;
     }

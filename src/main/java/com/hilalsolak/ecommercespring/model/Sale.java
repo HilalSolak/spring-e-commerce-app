@@ -1,12 +1,13 @@
 package com.hilalsolak.ecommercespring.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Sale extends BaseModel{
     private String description;
     private BigDecimal totalPrice;

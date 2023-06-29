@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  github:
+    image: mysql:latest
+    container_name: ecommerce-mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: hilalsolak
+      MYSQL_DATABASE: ecommerce
+    ports:
+      - "3306:3306"

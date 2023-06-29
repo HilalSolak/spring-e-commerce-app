@@ -21,8 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getAll() {
         List<CategoryResponse> response = repository.findAll().stream().
-                map(category -> new CategoryResponse(category.getId(),category.getName())).
-                toList();
+                map(CategoryResponse::convert)
+                .toList();
 
         return response;
     }
@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse getById(UUID id) {
         Category category = getCategoryById(id);
-        CategoryResponse response = new CategoryResponse(category.getId(), category.getName());
+        CategoryResponse response =  CategoryResponse.convert(category);
 
         return response;
     }

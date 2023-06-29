@@ -13,7 +13,7 @@ public interface ProductService  {
 
     ProductResponse getById(UUID id);
 
-    ProductResponse createById(ProductRequest request);
+    ProductResponse create(ProductRequest request);
 
     ProductResponse updateById(UUID id, ProductRequest request);
     void  deleteById(UUID id);

@@ -13,7 +13,7 @@ public interface PaymentService {
 
     PaymentResponse getById(UUID id);
 
-    PaymentResponse createById(PaymentRequest request);
+    PaymentResponse create(PaymentRequest request);
 
     PaymentResponse updateById(UUID id, PaymentRequest request);
     void  deleteById(UUID id);

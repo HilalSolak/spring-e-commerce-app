@@ -1,8 +1,10 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
+import com.hilalsolak.ecommercespring.constants.GlobalConstants;
 import com.hilalsolak.ecommercespring.dto.requests.ProductRequest;
 import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
 import com.hilalsolak.ecommercespring.dto.responses.ProductResponse;
+import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
 import com.hilalsolak.ecommercespring.model.Category;
 import com.hilalsolak.ecommercespring.model.Product;
 import com.hilalsolak.ecommercespring.repository.ProductRepository;
@@ -45,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         CategoryResponse categoryResponse = categoryService.getById(request.categoryId());
         Category category = new Category();
         category.setId(categoryResponse.id());
+        category.setName(categoryResponse.name());
 
         Product product = new Product();
 
@@ -62,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
         CategoryResponse categoryResponse = categoryService.getById(request.categoryId());
         Category category = new Category();
         category.setId(categoryResponse.id());
+        category.setName(categoryResponse.name());
 
         fillProductFeatures(request,category,product);
 
@@ -78,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
     private Product getProductById(UUID id){
 
-        return repository.findById(id).orElseThrow(()->new RuntimeException("Product not exists"));
+        return repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND));
     }
     private void fillProductFeatures(ProductRequest request,Category category, Product product){
         product.setName(request.name());

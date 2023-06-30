@@ -1,7 +1,10 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
+import com.hilalsolak.ecommercespring.constants.GlobalConstants;
 import com.hilalsolak.ecommercespring.dto.requests.CategoryRequest;
 import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
+import com.hilalsolak.ecommercespring.exception.EntityAlreadyExistsException;
+import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
 import com.hilalsolak.ecommercespring.model.Category;
 import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
@@ -36,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse create(CategoryRequest request) {
+        checkIfCategoryIsAlreadyExists(request.name());
         Category category =  new Category();
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
@@ -58,6 +62,11 @@ public class CategoryServiceImpl implements CategoryService {
         repository.delete(category);
     }
     private Category getCategoryById(UUID id){
-        return  repository.findById(id).orElseThrow(()->new RuntimeException("Category not exists"));
+        return  repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.CATEGORY_NOT_FOUND));
+    }
+    private void checkIfCategoryIsAlreadyExists(String name){
+        if (repository.existsByName(name)){
+            throw new EntityAlreadyExistsException(GlobalConstants.CATEGORY_ALREADY_EXISTS);
+        }
     }
 }

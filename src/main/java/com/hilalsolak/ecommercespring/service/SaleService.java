@@ -13,7 +13,7 @@ public interface SaleService {
 
     SaleResponse getById(UUID id);
 
-    SaleResponse createById(SaleRequest request);
+    SaleResponse create(SaleRequest request);
 
     SaleResponse updateById(UUID id, SaleRequest request);
     void  deleteById(UUID id);

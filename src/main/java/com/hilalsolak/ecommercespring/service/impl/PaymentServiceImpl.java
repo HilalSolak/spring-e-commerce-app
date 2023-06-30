@@ -4,6 +4,7 @@ import com.hilalsolak.ecommercespring.constants.GlobalConstants;
 import com.hilalsolak.ecommercespring.dto.requests.PaymentRequest;
 import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
 import com.hilalsolak.ecommercespring.dto.responses.PaymentResponse;
+import com.hilalsolak.ecommercespring.exception.BalanceNotEnoughException;
 import com.hilalsolak.ecommercespring.exception.EntityAlreadyExistsException;
 import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
 import com.hilalsolak.ecommercespring.model.Payment;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.prefs.BackingStoreException;
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository repository;
@@ -62,6 +65,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public void paymentProcess(PaymentRequest request, BigDecimal totalPrice) {
+        Payment payment = getPaymentByRequest(request);
+        checkIfBalanceEnough(totalPrice,request.balance());
+        payment.setBalance(payment.getBalance().subtract(totalPrice));
+        repository.save(payment);
+    }
+
+
+    @Override
     public void deleteById(UUID id) {
         Payment payment = getPaymentById(id);
         repository.delete(payment);
@@ -84,4 +96,17 @@ public class PaymentServiceImpl implements PaymentService {
              throw new EntityAlreadyExistsException(GlobalConstants.CARD_NUMBER_ALREADY_EXISTS);
          }
     }
+    private Payment getPaymentByRequest(PaymentRequest request) {
+
+       return repository.findByCardHolderAndCardNumberAndCardExpiredMonthAndCardExpiredYearAndCardCvv(request.cardHolder()
+                       ,request.cardNumber(),request.cardExpiredMonth(),request.cardExpiredYear(),request.cardCvv())
+               .orElseThrow(()->new EntityNotFoundException(GlobalConstants.PAYMENT_NOT_FOUND));
+
+    }
+    private void checkIfBalanceEnough(BigDecimal totalPrice, BigDecimal balance) {
+        if(balance.compareTo(totalPrice)<0){
+            throw new BalanceNotEnoughException(GlobalConstants.BALANCE_NOT_ENOUGH);
+        }
+    }
+
 }

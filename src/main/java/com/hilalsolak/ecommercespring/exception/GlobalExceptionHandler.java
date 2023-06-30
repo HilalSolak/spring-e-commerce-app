@@ -18,5 +18,9 @@ public class GlobalExceptionHandler {
     public ExceptionResponse handleEntityAlreadyExistsException(EntityAlreadyExistsException exception, HttpServletRequest request ){
         return new ExceptionResponse(HttpStatus.BAD_REQUEST,request.getServletPath(), LocalDateTime.now(), exception.getMessage());
     }
+    @ExceptionHandler(BalanceNotEnoughException.class)
+    public ExceptionResponse handleBalanceNotEnoughException(BalanceNotEnoughException exception,HttpServletRequest request){
+        return new ExceptionResponse(HttpStatus.BAD_REQUEST,request.getServletPath(),LocalDateTime.now(),exception.getMessage());
+    }
 
 }

@@ -13,7 +13,7 @@ public interface InvoiceService {
 
     InvoiceResponse getById(UUID id);
 
-    InvoiceResponse createById(InvoiceRequest request);
+    InvoiceResponse create(InvoiceRequest request);
 
     InvoiceResponse updateById(UUID id, InvoiceRequest request);
     void  deleteById(UUID id);

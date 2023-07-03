@@ -1,8 +1,9 @@
 package com.hilalsolak.ecommercespring.api;
 
-import com.hilalsolak.ecommercespring.dto.requests.ProductRequest;
-import com.hilalsolak.ecommercespring.dto.responses.ProductResponse;
-import com.hilalsolak.ecommercespring.service.ProductService;
+import com.hilalsolak.ecommercespring.dto.requests.InvoiceRequest;
+import com.hilalsolak.ecommercespring.dto.responses.InvoiceResponse;
+import com.hilalsolak.ecommercespring.model.Invoice;
+import com.hilalsolak.ecommercespring.service.InvoiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,40 +11,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/products")
-public class ProductController {
-    private final ProductService service;
+@RequestMapping("/api/invoices")
+public class InvoiceController {
+    private final InvoiceService service;
 
-    public ProductController(ProductService service) {
+    public InvoiceController(InvoiceService service) {
         this.service = service;
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<ProductResponse> getAll(){
+    List<InvoiceResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    ProductResponse getById(@PathVariable UUID id){
+    InvoiceResponse getById(@PathVariable UUID id){
         return service.getById(id);
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ProductResponse create(@RequestBody ProductRequest request){
+    InvoiceResponse create(@RequestBody InvoiceRequest request){
         return service.create(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    ProductResponse updateById(@PathVariable UUID id,@RequestBody ProductRequest request){
+    InvoiceResponse update(@PathVariable UUID id, @RequestBody InvoiceRequest request){
         return service.updateById(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id){
+    public void  deleteById(@PathVariable UUID id){
         service.deleteById(id);
     }
 }

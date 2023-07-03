@@ -1,8 +1,8 @@
 package com.hilalsolak.ecommercespring.api;
 
-import com.hilalsolak.ecommercespring.dto.requests.ProductRequest;
-import com.hilalsolak.ecommercespring.dto.responses.ProductResponse;
-import com.hilalsolak.ecommercespring.service.ProductService;
+import com.hilalsolak.ecommercespring.dto.requests.SaleRequest;
+import com.hilalsolak.ecommercespring.dto.responses.SaleResponse;
+import com.hilalsolak.ecommercespring.service.SaleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,34 +10,34 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/products")
-public class ProductController {
-    private final ProductService service;
+@RequestMapping("/api/sales")
+public class SaleController {
+    private final SaleService service;
 
-    public ProductController(ProductService service) {
+    public SaleController(SaleService service) {
         this.service = service;
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<ProductResponse> getAll(){
+    List<SaleResponse> getAll(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    ProductResponse getById(@PathVariable UUID id){
+    SaleResponse getById(@PathVariable UUID id){
         return service.getById(id);
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ProductResponse create(@RequestBody ProductRequest request){
+    SaleResponse create(@RequestBody SaleRequest request){
         return service.create(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    ProductResponse updateById(@PathVariable UUID id,@RequestBody ProductRequest request){
+    SaleResponse updateById(@PathVariable UUID id,@RequestBody SaleRequest request){
         return service.updateById(id,request);
     }
 

@@ -8,6 +8,10 @@ import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
 import com.hilalsolak.ecommercespring.model.Category;
 import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
+import com.hilalsolak.ecommercespring.service.LoggerService;
+import com.hilalsolak.ecommercespring.utils.LoggerHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +20,12 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
-
-    public CategoryServiceImpl(CategoryRepository repository) {
+    private final LoggerService loggerService;
+    private final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+    public CategoryServiceImpl(CategoryRepository repository, LoggerService service) {
         this.repository = repository;
+        this.loggerService = service;
+
     }
 
     @Override
@@ -26,14 +33,14 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryResponse> response = repository.findAll().stream().
                 map(CategoryResponse::convert)
                 .toList();
-
+        logger.info("Category listed. ");
         return response;
     }
     @Override
     public CategoryResponse getById(UUID id) {
         Category category = getCategoryById(id);
         CategoryResponse response =  CategoryResponse.convert(category);
-
+        logger.info("category id={} listed", id );
         return response;
     }
 
@@ -43,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category =  new Category();
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
-
+        loggerService.create(LoggerHelper.convertJsonToString(request),LoggerHelper.convertJsonToString(response));
         return response;
     }
 
@@ -52,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = getCategoryById(id);
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
-
+        loggerService.create(LoggerHelper.convertJsonToString(request),LoggerHelper.convertJsonToString(response));
         return response;
     }
 
@@ -60,6 +67,8 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteById(UUID id) {
         Category category = getCategoryById(id);
         repository.delete(category);
+        logger.info("category id={} deleted", id );
+
     }
     private Category getCategoryById(UUID id){
         return  repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.CATEGORY_NOT_FOUND));

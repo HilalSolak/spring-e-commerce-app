@@ -11,6 +11,7 @@ public class GlobalConstants {
 
     public static final String SALE_NOT_FOUND = " Sale Not Found! ";
     public static final String BALANCE_NOT_ENOUGH = "Balance Not Enough ";
+    public static final String LOGGER_NOT_FOUND = " Logger Not Found ";
 
     private GlobalConstants(){
 

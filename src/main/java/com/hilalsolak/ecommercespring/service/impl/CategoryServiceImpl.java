@@ -10,8 +10,6 @@ import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
 import com.hilalsolak.ecommercespring.service.LoggerService;
 import com.hilalsolak.ecommercespring.utils.LoggerHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +19,6 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     private final LoggerService loggerService;
-    private final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
     public CategoryServiceImpl(CategoryRepository repository, LoggerService service) {
         this.repository = repository;
         this.loggerService = service;
@@ -33,14 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryResponse> response = repository.findAll().stream().
                 map(CategoryResponse::convert)
                 .toList();
-        logger.info("Category listed. ");
         return response;
     }
     @Override
     public CategoryResponse getById(UUID id) {
         Category category = getCategoryById(id);
         CategoryResponse response =  CategoryResponse.convert(category);
-        logger.info("category id={} listed", id );
         return response;
     }
 
@@ -67,7 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteById(UUID id) {
         Category category = getCategoryById(id);
         repository.delete(category);
-        logger.info("category id={} deleted", id );
 
     }
     private Category getCategoryById(UUID id){

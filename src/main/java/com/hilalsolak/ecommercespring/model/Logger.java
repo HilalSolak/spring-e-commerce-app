@@ -4,30 +4,30 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Logger extends BaseModel {
-    private String request;
-    private String response;
+    private String clientId;
+    private String activityType;
 
     public Logger() {
     }
 
-    public Logger(String request, String response) {
-        this.request = request;
-        this.response = response;
+    public Logger(String clientId, String activityType) {
+        this.clientId = clientId;
+        this.activityType = activityType;
     }
 
-    public String getRequest() {
-        return request;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setRequest(String request) {
-        this.request = request;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getResponse() {
-        return response;
+    public String getActivityType() {
+        return activityType;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
     }
 }

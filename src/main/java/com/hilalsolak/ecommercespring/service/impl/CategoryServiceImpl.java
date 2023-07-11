@@ -8,8 +8,6 @@ import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
 import com.hilalsolak.ecommercespring.model.Category;
 import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
-import com.hilalsolak.ecommercespring.service.LoggerService;
-import com.hilalsolak.ecommercespring.utils.LoggerHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +16,8 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
-    private final LoggerService loggerService;
-    public CategoryServiceImpl(CategoryRepository repository, LoggerService service) {
+    public CategoryServiceImpl(CategoryRepository repository) {
         this.repository = repository;
-        this.loggerService = service;
 
     }
 
@@ -30,12 +26,14 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryResponse> response = repository.findAll().stream().
                 map(CategoryResponse::convert)
                 .toList();
+
         return response;
     }
     @Override
     public CategoryResponse getById(UUID id) {
         Category category = getCategoryById(id);
         CategoryResponse response =  CategoryResponse.convert(category);
+
         return response;
     }
 
@@ -45,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category =  new Category();
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
-        loggerService.create(LoggerHelper.convertJsonToString(request),LoggerHelper.convertJsonToString(response));
+
         return response;
     }
 
@@ -54,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = getCategoryById(id);
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
-        loggerService.create(LoggerHelper.convertJsonToString(request),LoggerHelper.convertJsonToString(response));
+
         return response;
     }
 

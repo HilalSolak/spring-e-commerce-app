@@ -27,7 +27,6 @@ public class Category extends BaseModel {
     public void setName(String name) {
         this.name = name;
     }
-
     public List<Product> getProducts() {
         return products;
     }

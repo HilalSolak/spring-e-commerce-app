@@ -8,6 +8,6 @@ import java.util.UUID;
 public interface LoggerService {
     List<LoggerResponse> getAll();
     LoggerResponse getById(UUID id);
-    void create(String request, String response);
+    void create(String clientId, String activityType);
     void delete(UUID id);
 }

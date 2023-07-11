@@ -35,10 +35,10 @@ public class LoggerServiceImpl implements LoggerService {
     }
 
     @Override
-    public void create(String request, String response) {
+    public void create(String clientId, String activityType) {
          Logger logger = new Logger();
-         logger.setRequest(request);
-         logger.setResponse(response);
+         logger.setClientId(clientId);
+         logger.setActivityType(activityType);
          repository.save(logger);
     }
 

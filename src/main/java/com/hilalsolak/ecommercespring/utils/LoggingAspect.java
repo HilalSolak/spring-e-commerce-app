@@ -6,13 +6,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.request.RequestContextHolder;
 
 @Aspect //bu classımızın aspect olduğunu söylüyoruz bu anotasyonla.
 // Applicationda yazdığımız enableaspectjautoproxy ile de bu classımızın aspect olduğunu buluyor
 public class LoggingAspect {
-    private Logger logger = LoggerFactory.getLogger(LoggingAspect.class.getName());
     private final LoggerService loggerService;
 
     public LoggingAspect(LoggerService loggerService) {

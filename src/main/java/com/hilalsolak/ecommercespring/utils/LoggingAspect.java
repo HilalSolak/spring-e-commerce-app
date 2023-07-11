@@ -11,7 +11,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 @Aspect //bu classımızın aspect olduğunu söylüyoruz bu anotasyonla.
 // Applicationda yazdığımız enableaspectjautoproxy ile de bu classımızın aspect olduğunu buluyor
-@Scope("singleton")
 public class LoggingAspect {
     private Logger logger = LoggerFactory.getLogger(LoggingAspect.class.getName());
     private final LoggerService loggerService;

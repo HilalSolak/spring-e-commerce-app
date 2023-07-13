@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> getAll() {
+    public List<ProductResponse> getAllProducts() {
         List<ProductResponse> response = repository.findAll().stream()
                 .map(ProductResponse::convert)
                 .toList();
@@ -36,16 +36,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse getById(UUID id) {
-        Product product = getProductById(id);
+    public ProductResponse getProductById(UUID id) {
+        Product product = getProductByIdInRepository(id);
         ProductResponse response = ProductResponse.convert(product);
 
         return response;
     }
 
     @Override
-    public ProductResponse create(ProductRequest request) {
-        CategoryResponse categoryResponse = categoryService.getById(request.categoryId());
+    public ProductResponse createProduct(ProductRequest request) {
+        CategoryResponse categoryResponse = categoryService.getCategoryById(request.categoryId());
         Category category = new Category();
         category.setId(categoryResponse.id());
         category.setName(categoryResponse.name());
@@ -60,10 +60,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse updateById(UUID id, ProductRequest request) {
-        Product product = getProductById(id);
+    public ProductResponse updateProductById(UUID id, ProductRequest request) {
+        Product product = getProductByIdInRepository(id);
 
-        CategoryResponse categoryResponse = categoryService.getById(request.categoryId());
+        CategoryResponse categoryResponse = categoryService.getCategoryById(request.categoryId());
         Category category = new Category();
         category.setId(categoryResponse.id());
         category.setName(categoryResponse.name());
@@ -76,12 +76,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(UUID id) {
-        Product product = getProductById(id);
+    public void deleteProductById(UUID id) {
+        Product product = getProductByIdInRepository(id);
 
         repository.delete(product);
     }
-    private Product getProductById(UUID id){
+    private Product getProductByIdInRepository(UUID id){
 
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND));
     }

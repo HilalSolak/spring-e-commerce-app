@@ -23,20 +23,20 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceResponse> getAll() {
+    public List<InvoiceResponse> getAllInvoices() {
         List<InvoiceResponse> response = repository.findAll().stream().map(InvoiceResponse::convert).toList();
 
         return response;
     }
 
     @Override
-    public InvoiceResponse getById(UUID id) {
-        Invoice invoice = getInvoiceById(id);
+    public InvoiceResponse getInvoiceById(UUID id) {
+        Invoice invoice = getInvoiceByIdInRepository(id);
         InvoiceResponse response = InvoiceResponse.convert(invoice);
         return response;
     }
     @Override
-    public InvoiceResponse create(InvoiceRequest request) {
+    public InvoiceResponse createInvoice(InvoiceRequest request) {
         checkIfInvoiceAlreadyExists(request);
         Invoice invoice = new Invoice();
         fillInvoiceFeatures(invoice,request);
@@ -47,8 +47,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public InvoiceResponse updateById(UUID id, InvoiceRequest request) {
-        Invoice invoice = getInvoiceById(id);
+    public InvoiceResponse updateInvoiceById(UUID id, InvoiceRequest request) {
+        Invoice invoice = getInvoiceByIdInRepository(id);
         fillInvoiceFeatures(invoice,request);
         InvoiceResponse response = InvoiceResponse.convert(repository.save(invoice));
 
@@ -56,11 +56,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public void deleteById(UUID id) {
-        Invoice invoice = getInvoiceById(id);
+    public void deleteInvoiceById(UUID id) {
+        Invoice invoice = getInvoiceByIdInRepository(id);
         repository.delete(invoice);
     }
-    private Invoice getInvoiceById(UUID id) {
+    private Invoice getInvoiceByIdInRepository(UUID id) {
         return repository.findById(id).orElseThrow(()-> new EntityNotFoundException(GlobalConstants.INVOICE_NOT_FOUND));
     }
     private void checkIfInvoiceAlreadyExists(InvoiceRequest request) {

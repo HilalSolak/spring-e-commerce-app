@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LoggerService {
-    List<LoggerResponse> getAll();
-    LoggerResponse getById(UUID id);
-    void create(String clientId, String activityType);
-    void delete(UUID id);
+    List<LoggerResponse> getAllLoggers();
+    LoggerResponse getLoggerById(UUID id);
+    void createLogger(String clientId, String activityType);
+    void deleteLoggerById(UUID id);
 }

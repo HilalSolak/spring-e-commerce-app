@@ -20,30 +20,30 @@ public class SaleController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<SaleResponse> getAll(){
-        return service.getAll();
+        return service.getAllSales();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     SaleResponse getById(@PathVariable UUID id){
-        return service.getById(id);
+        return service.getSaleById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     SaleResponse create(@RequestBody SaleRequest request){
-        return service.create(request);
+        return service.createSale(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     SaleResponse updateById(@PathVariable UUID id,@RequestBody SaleRequest request){
-        return service.updateById(id,request);
+        return service.updateSaleById(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id){
-        service.deleteById(id);
+        service.deleteSaleById(id);
     }
 }

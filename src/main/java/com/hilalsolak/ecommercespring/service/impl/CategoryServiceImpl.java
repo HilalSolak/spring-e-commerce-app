@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponse> getAll() {
+    public List<CategoryResponse> getAllCategories() {
         List<CategoryResponse> response = repository.findAll().stream().
                 map(CategoryResponse::convert)
                 .toList();
@@ -30,15 +30,15 @@ public class CategoryServiceImpl implements CategoryService {
         return response;
     }
     @Override
-    public CategoryResponse getById(UUID id) {
-        Category category = getCategoryById(id);
+    public CategoryResponse getCategoryById(UUID id) {
+        Category category = getCategoryByIdInRepository(id);
         CategoryResponse response =  CategoryResponse.convert(category);
 
         return response;
     }
 
     @Override
-    public CategoryResponse create(CategoryRequest request) {
+    public CategoryResponse createCategory(CategoryRequest request) {
         checkIfCategoryIsAlreadyExists(request.name());
         Category category =  new Category();
         category.setName(request.name());
@@ -48,8 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse updateById(UUID id, CategoryRequest request) {
-        Category category = getCategoryById(id);
+    public CategoryResponse updateCategoryById(UUID id, CategoryRequest request) {
+        Category category = getCategoryByIdInRepository(id);
         category.setName(request.name());
         CategoryResponse response = CategoryResponse.convert(repository.save(category));
 
@@ -57,12 +57,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteById(UUID id) {
-        Category category = getCategoryById(id);
+    public void deleteCategoryById(UUID id) {
+        Category category = getCategoryByIdInRepository(id);
         repository.delete(category);
 
     }
-    private Category getCategoryById(UUID id){
+    private Category getCategoryByIdInRepository(UUID id){
         return  repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.CATEGORY_NOT_FOUND));
     }
     private void checkIfCategoryIsAlreadyExists(String name){

@@ -20,22 +20,22 @@ public class LoggerServiceImpl implements LoggerService {
     }
 
     @Override
-    public List<LoggerResponse> getAll() {
+    public List<LoggerResponse> getAllLoggers() {
         List<LoggerResponse> response = repository.findAll().stream().map(LoggerResponse::convert).toList();
 
         return response;
     }
 
     @Override
-    public LoggerResponse getById(UUID id) {
-        Logger logger = getLoggerById(id);
+    public LoggerResponse getLoggerById(UUID id) {
+        Logger logger = getLoggerByIdInRepository(id);
         LoggerResponse response = LoggerResponse.convert(logger);
 
         return response;
     }
 
     @Override
-    public void create(String clientId, String activityType) {
+    public void createLogger(String clientId, String activityType) {
          Logger logger = new Logger();
          logger.setClientId(clientId);
          logger.setActivityType(activityType);
@@ -43,11 +43,11 @@ public class LoggerServiceImpl implements LoggerService {
     }
 
     @Override
-    public void delete(UUID id) {
-        Logger logger = getLoggerById(id);
+    public void deleteLoggerById(UUID id) {
+        Logger logger = getLoggerByIdInRepository(id);
         repository.delete(logger);
     }
-    private Logger getLoggerById(UUID id) {
+    private Logger getLoggerByIdInRepository(UUID id) {
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.LOGGER_NOT_FOUND));
 
     }

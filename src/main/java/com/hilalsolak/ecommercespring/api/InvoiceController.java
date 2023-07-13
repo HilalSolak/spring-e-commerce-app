@@ -2,7 +2,6 @@ package com.hilalsolak.ecommercespring.api;
 
 import com.hilalsolak.ecommercespring.dto.requests.InvoiceRequest;
 import com.hilalsolak.ecommercespring.dto.responses.InvoiceResponse;
-import com.hilalsolak.ecommercespring.model.Invoice;
 import com.hilalsolak.ecommercespring.service.InvoiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,30 +20,30 @@ public class InvoiceController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<InvoiceResponse> getAll() {
-        return service.getAll();
+        return service.getAllInvoices();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     InvoiceResponse getById(@PathVariable UUID id){
-        return service.getById(id);
+        return service.getInvoiceById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     InvoiceResponse create(@RequestBody InvoiceRequest request){
-        return service.create(request);
+        return service.createInvoice(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     InvoiceResponse update(@PathVariable UUID id, @RequestBody InvoiceRequest request){
-        return service.updateById(id,request);
+        return service.updateInvoiceById(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void  deleteById(@PathVariable UUID id){
-        service.deleteById(id);
+        service.deleteInvoiceById(id);
     }
 }

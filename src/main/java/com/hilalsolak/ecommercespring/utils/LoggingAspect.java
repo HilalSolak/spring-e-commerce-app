@@ -4,8 +4,6 @@ import com.hilalsolak.ecommercespring.service.LoggerService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 
 @Aspect //bu classımızın aspect olduğunu söylüyoruz bu anotasyonla.
@@ -27,7 +25,7 @@ public class LoggingAspect {
         // Metodu çağırarak devam etmek için proceed() yöntemini kullanın
         joinPoint.proceed();
 
-        loggerService.create(clientId,activityType);
+        loggerService.createLogger(clientId,activityType);
     }
 
 }

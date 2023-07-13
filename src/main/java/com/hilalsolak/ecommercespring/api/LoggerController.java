@@ -19,18 +19,18 @@ public class LoggerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<LoggerResponse> getAll(){
-        return service.getAll();
+        return service.getAllLoggers();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     LoggerResponse getById(@PathVariable UUID id){
-        return service.getById(id);
+        return service.getLoggerById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id){
-        service.delete(id);
+        service.deleteLoggerById(id);
     }
 }

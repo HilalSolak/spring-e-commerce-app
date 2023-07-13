@@ -33,15 +33,15 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public List<SaleResponse> getAll() {
+    public List<SaleResponse> getAllSales() {
         List<SaleResponse> response = repository.findAll().stream().map(SaleResponse::convert).toList();
 
         return response;
     }
 
     @Override
-    public SaleResponse getById(UUID id) {
-        Sale sale = getSaleById(id);
+    public SaleResponse getSaleById(UUID id) {
+        Sale sale = getSaleByIdInRepository(id);
         SaleResponse response = SaleResponse.convert(sale);
 
         return response;
@@ -49,7 +49,7 @@ public class SaleServiceImpl implements SaleService {
 
 
     @Override
-    public SaleResponse create(SaleRequest request) {
+    public SaleResponse createSale(SaleRequest request) {
         paymentService.paymentProcess(request.paymentRequest(),request.totalPrice());
 
         Sale sale = new Sale();
@@ -57,7 +57,7 @@ public class SaleServiceImpl implements SaleService {
         SaleResponse response = SaleResponse.convert(repository.save(sale));
 
         InvoiceRequest invoiceRequest = new InvoiceRequest(response.id(),response.description());
-        invoiceService.create(invoiceRequest);
+        invoiceService.createInvoice(invoiceRequest);
 
         return response;
     }
@@ -65,19 +65,19 @@ public class SaleServiceImpl implements SaleService {
 
 
     @Override
-    public SaleResponse updateById(UUID id, SaleRequest request) {
-        Sale sale = getSaleById(id);
+    public SaleResponse updateSaleById(UUID id, SaleRequest request) {
+        Sale sale = getSaleByIdInRepository(id);
         fillSaleFeatures(sale, request);
         SaleResponse response = SaleResponse.convert(repository.save(sale));
         return response;
     }
 
     @Override
-    public void deleteById(UUID id) {
-        Sale sale = getSaleById(id);
+    public void deleteSaleById(UUID id) {
+        Sale sale = getSaleByIdInRepository(id);
         repository.delete(sale);
     }
-    private Sale getSaleById(UUID id) {
+    private Sale getSaleByIdInRepository(UUID id) {
 
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.SALE_NOT_FOUND));
     }
@@ -85,7 +85,7 @@ public class SaleServiceImpl implements SaleService {
         sale.setDescription(request.description());
         sale.setTotalPrice(request.totalPrice());
 
-        List<ProductResponse> response = request.products().stream().map(productService::getById).toList();
+        List<ProductResponse> response = request.products().stream().map(productService::getProductById).toList();
 
         response.forEach(productResponse->{
             Product product = new Product();

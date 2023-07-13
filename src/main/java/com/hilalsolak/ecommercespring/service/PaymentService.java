@@ -2,21 +2,19 @@ package com.hilalsolak.ecommercespring.service;
 
 import com.hilalsolak.ecommercespring.dto.requests.PaymentRequest;
 import com.hilalsolak.ecommercespring.dto.responses.PaymentResponse;
-import com.hilalsolak.ecommercespring.model.Category;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 public interface PaymentService {
-    List<PaymentResponse> getAll();
+    List<PaymentResponse> getAllPayments();
 
-    PaymentResponse getById(UUID id);
+    PaymentResponse getPaymentById(UUID id);
 
-    PaymentResponse create(PaymentRequest request);
+    PaymentResponse createPayment(PaymentRequest request);
 
-    PaymentResponse updateById(UUID id, PaymentRequest request);
+    PaymentResponse updatePaymentById(UUID id, PaymentRequest request);
     void paymentProcess(PaymentRequest request, BigDecimal totalPrice);
-    void  deleteById(UUID id);
+    void deletePaymentById(UUID id);
 }

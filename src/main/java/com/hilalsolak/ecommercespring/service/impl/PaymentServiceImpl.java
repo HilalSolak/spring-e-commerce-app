@@ -2,7 +2,6 @@ package com.hilalsolak.ecommercespring.service.impl;
 
 import com.hilalsolak.ecommercespring.constants.GlobalConstants;
 import com.hilalsolak.ecommercespring.dto.requests.PaymentRequest;
-import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
 import com.hilalsolak.ecommercespring.dto.responses.PaymentResponse;
 import com.hilalsolak.ecommercespring.exception.BalanceNotEnoughException;
 import com.hilalsolak.ecommercespring.exception.EntityAlreadyExistsException;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import java.util.prefs.BackingStoreException;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -27,14 +25,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentResponse> getAll() {
+    public List<PaymentResponse> getAllPayments() {
         List<PaymentResponse> response = repository.findAll().stream().map(PaymentResponse::convert).toList();
         return response;
     }
 
     @Override
-    public PaymentResponse getById(UUID id) {
-        Payment payment = getPaymentById(id);
+    public PaymentResponse getPaymentById(UUID id) {
+        Payment payment = getPaymentByIdInRepository(id);
         PaymentResponse response = PaymentResponse.convert(payment);
 
         return response;
@@ -43,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
-    public PaymentResponse create(PaymentRequest request) {
+    public PaymentResponse createPayment(PaymentRequest request) {
         checkIfCardNumberExists(request);
 
         Payment payment = new Payment();
@@ -54,11 +52,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-
-
     @Override
-    public PaymentResponse updateById(UUID id, PaymentRequest request) {
-        Payment payment = getPaymentById(id);
+    public PaymentResponse updatePaymentById(UUID id, PaymentRequest request) {
+        Payment payment = getPaymentByIdInRepository(id);
         fillPaymentFeatures(payment,request);
         PaymentResponse response = PaymentResponse.convert(repository.save(payment));
         return response;
@@ -74,11 +70,11 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
-    public void deleteById(UUID id) {
-        Payment payment = getPaymentById(id);
+    public void deletePaymentById(UUID id) {
+        Payment payment = getPaymentByIdInRepository(id);
         repository.delete(payment);
     }
-    private Payment getPaymentById(UUID id) {
+    private Payment getPaymentByIdInRepository(UUID id) {
 
         return repository.findById(id).orElseThrow(()->
                 new EntityNotFoundException(GlobalConstants.PAYMENT_NOT_FOUND));

@@ -20,30 +20,30 @@ public class ProductController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<ProductResponse> getAll(){
-        return service.getAll();
+        return service.getAllProducts();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     ProductResponse getById(@PathVariable UUID id){
-        return service.getById(id);
+        return service.getProductById(id);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     ProductResponse create(@RequestBody ProductRequest request){
-        return service.create(request);
+        return service.createProduct(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     ProductResponse updateById(@PathVariable UUID id,@RequestBody ProductRequest request){
-        return service.updateById(id,request);
+        return service.updateProductById(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id){
-        service.deleteById(id);
+        service.deleteProductById(id);
     }
 }

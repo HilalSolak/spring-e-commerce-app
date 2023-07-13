@@ -2,8 +2,7 @@ package com.hilalsolak.ecommercespring.utils;
 
 import com.hilalsolak.ecommercespring.service.LoggerService;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 
 @Aspect //bu classımızın aspect olduğunu söylüyoruz bu anotasyonla.
@@ -16,16 +15,19 @@ public class LoggingAspect {
     }
 
     @Around("execution(* com.hilalsolak.ecommercespring.api.*.*(..))")
-    public void log(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
         String clientId =  RequestContextHolder.currentRequestAttributes().getSessionId();
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
         String activityType = "Class: "+ className +" Method: " + methodName + " is called";
-
-        // Metodu çağırarak devam etmek için proceed() yöntemini kullanın
-        joinPoint.proceed();
-
         loggerService.createLogger(clientId,activityType);
+        // Metodu çağırarak devam etmek için proceed() yöntemini kullanın
+
+        Object returnedValue = joinPoint.proceed();
+
+        return returnedValue;
+
+
     }
 
 }

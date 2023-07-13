@@ -29,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         return response;
     }
+
     @Override
     public CategoryResponse getCategoryById(UUID id) {
         Category category = getCategoryByIdInRepository(id);

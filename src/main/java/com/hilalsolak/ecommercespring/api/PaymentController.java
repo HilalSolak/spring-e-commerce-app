@@ -20,31 +20,31 @@ public class PaymentController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<PaymentResponse> getAll(){
+    List<PaymentResponse> getAllPayments(){
         return service.getAllPayments();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    PaymentResponse getById(@PathVariable UUID id){
+    PaymentResponse getPaymentById(@PathVariable UUID id){
         return service.getPaymentById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    PaymentResponse create(@RequestBody PaymentRequest request){
+    PaymentResponse createPayment(@RequestBody PaymentRequest request){
         return service.createPayment(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    PaymentResponse updateById(@PathVariable UUID id, @RequestBody PaymentRequest request){
+    PaymentResponse updatePaymentById(@PathVariable UUID id, @RequestBody PaymentRequest request){
         return service.updatePaymentById(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id){
+    public void deletePaymentById(@PathVariable UUID id){
         service.deletePaymentById(id);
     }
 

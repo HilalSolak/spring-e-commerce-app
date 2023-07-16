@@ -10,8 +10,12 @@ import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -63,6 +67,17 @@ public class CategoryServiceImpl implements CategoryService {
         repository.delete(category);
 
     }
+
+    @Override
+    public List<CategoryResponse> getCategoriesBySearchText(String filter) {
+
+        List<CategoryResponse> responseList = repository.findAll().stream().filter(category -> category.getName()
+                .startsWith(filter)).map(CategoryResponse::convert).toList();
+
+        return responseList;
+    }
+
+
     private Category getCategoryByIdInRepository(UUID id){
         return  repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.CATEGORY_NOT_FOUND));
     }

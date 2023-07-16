@@ -19,31 +19,31 @@ public class InvoiceController {
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<InvoiceResponse> getAll() {
+    List<InvoiceResponse> getAllInvoices() {
         return service.getAllInvoices();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    InvoiceResponse getById(@PathVariable UUID id){
+    InvoiceResponse getInvoiceById(@PathVariable UUID id){
         return service.getInvoiceById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    InvoiceResponse create(@RequestBody InvoiceRequest request){
+    InvoiceResponse createInvoice(@RequestBody InvoiceRequest request){
         return service.createInvoice(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    InvoiceResponse update(@PathVariable UUID id, @RequestBody InvoiceRequest request){
+    InvoiceResponse updateInvoiceById(@PathVariable UUID id, @RequestBody InvoiceRequest request){
         return service.updateInvoiceById(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void  deleteById(@PathVariable UUID id){
+    public void  deleteInvoiceById(@PathVariable UUID id){
         service.deleteInvoiceById(id);
     }
 }

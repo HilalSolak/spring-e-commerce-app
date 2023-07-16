@@ -19,19 +19,19 @@ public class SaleController {
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<SaleResponse> getAll(){
+    List<SaleResponse> getAllSales(){
         return service.getAllSales();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    SaleResponse getById(@PathVariable UUID id){
+    SaleResponse getSaleById(@PathVariable UUID id){
         return service.getSaleById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    SaleResponse create(@RequestBody SaleRequest request){
+    SaleResponse createSale(@RequestBody SaleRequest request){
         return service.createSale(request);
     }
 

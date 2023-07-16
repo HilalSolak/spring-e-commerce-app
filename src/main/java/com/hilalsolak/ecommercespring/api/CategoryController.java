@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -20,27 +20,31 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CategoryResponse> getAll(){
+    public List<CategoryResponse> getAllCategories(){
         return service.getAllCategories();
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryResponse getById(@PathVariable UUID id){
+    public CategoryResponse getCategoryById(@PathVariable UUID id){
         return service.getCategoryById(id);
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponse create(@RequestBody CategoryRequest request){
+    public CategoryResponse createCategory(@RequestBody CategoryRequest request){
         return service.createCategory(request);
     }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public CategoryResponse updateById(@PathVariable UUID id, @RequestBody CategoryRequest request){
+    public CategoryResponse updateCategoryById(@PathVariable UUID id, @RequestBody CategoryRequest request){
         return service.updateCategoryById(id,request);
+    }
+    @GetMapping("/filter")
+    public List<CategoryResponse> getCategoriesBySearchText(@RequestParam("filter") String filter){
+        return service.getCategoriesBySearchText(filter);
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id){
+    public void deleteCategoryById(@PathVariable UUID id){
         service.deleteCategoryById(id);
     }
 }

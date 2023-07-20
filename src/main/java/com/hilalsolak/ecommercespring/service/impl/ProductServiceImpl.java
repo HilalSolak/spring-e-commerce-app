@@ -1,12 +1,13 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
-import com.hilalsolak.ecommercespring.constants.GlobalConstants;
-import com.hilalsolak.ecommercespring.dto.requests.ProductRequest;
-import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
-import com.hilalsolak.ecommercespring.dto.responses.ProductResponse;
-import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.model.Category;
-import com.hilalsolak.ecommercespring.model.Product;
+import com.hilalsolak.ecommercespring.converters.ConverterResponse;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
+import com.hilalsolak.ecommercespring.model.dto.requests.ProductRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.CategoryResponse;
+import com.hilalsolak.ecommercespring.model.dto.responses.ProductResponse;
+import com.hilalsolak.ecommercespring.model.entities.Category;
+import com.hilalsolak.ecommercespring.model.entities.Product;
 import com.hilalsolak.ecommercespring.repository.ProductRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
 import com.hilalsolak.ecommercespring.service.ProductService;
@@ -29,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAllProducts() {
         List<ProductResponse> response = repository.findAll().stream()
-                .map(ProductResponse::convert)
+                .map(ConverterResponse::convert)
                 .toList();
 
         return response;
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse getProductById(UUID id) {
         Product product = getProductByIdInRepository(id);
-        ProductResponse response = ProductResponse.convert(product);
+            ProductResponse response = ConverterResponse.convert(product);
 
         return response;
     }
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
 
         fillProductFeatures(request,category,product);
 
-        ProductResponse response = ProductResponse.convert(repository.save(product));
+        ProductResponse response = ConverterResponse.convert(repository.save(product));
 
         return response;
     }
@@ -70,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 
         fillProductFeatures(request,category,product);
 
-        ProductResponse response = ProductResponse.convert(repository.save(product));
+        ProductResponse response = ConverterResponse.convert(repository.save(product));
 
         return response;
     }

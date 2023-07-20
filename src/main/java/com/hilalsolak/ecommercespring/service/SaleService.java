@@ -1,7 +1,7 @@
 package com.hilalsolak.ecommercespring.service;
 
-import com.hilalsolak.ecommercespring.dto.requests.SaleRequest;
-import com.hilalsolak.ecommercespring.dto.responses.SaleResponse;
+import com.hilalsolak.ecommercespring.model.dto.requests.SaleRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.SaleResponse;
 
 import java.util.List;
 import java.util.UUID;

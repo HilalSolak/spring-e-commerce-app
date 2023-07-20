@@ -1,13 +1,14 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
-import com.hilalsolak.ecommercespring.constants.GlobalConstants;
-import com.hilalsolak.ecommercespring.dto.requests.InvoiceRequest;
-import com.hilalsolak.ecommercespring.dto.requests.SaleRequest;
-import com.hilalsolak.ecommercespring.dto.responses.ProductResponse;
-import com.hilalsolak.ecommercespring.dto.responses.SaleResponse;
-import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.model.Product;
-import com.hilalsolak.ecommercespring.model.Sale;
+import com.hilalsolak.ecommercespring.converters.ConverterResponse;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
+import com.hilalsolak.ecommercespring.model.dto.requests.InvoiceRequest;
+import com.hilalsolak.ecommercespring.model.dto.requests.SaleRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.ProductResponse;
+import com.hilalsolak.ecommercespring.model.dto.responses.SaleResponse;
+import com.hilalsolak.ecommercespring.model.entities.Product;
+import com.hilalsolak.ecommercespring.model.entities.Sale;
 import com.hilalsolak.ecommercespring.repository.SaleRepository;
 import com.hilalsolak.ecommercespring.service.InvoiceService;
 import com.hilalsolak.ecommercespring.service.PaymentService;
@@ -34,7 +35,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public List<SaleResponse> getAllSales() {
-        List<SaleResponse> response = repository.findAll().stream().map(SaleResponse::convert).toList();
+        List<SaleResponse> response = repository.findAll().stream().map(ConverterResponse::convert).toList();
 
         return response;
     }
@@ -42,7 +43,7 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public SaleResponse getSaleById(UUID id) {
         Sale sale = getSaleByIdInRepository(id);
-        SaleResponse response = SaleResponse.convert(sale);
+        SaleResponse response = ConverterResponse.convert(sale);
 
         return response;
     }
@@ -54,7 +55,7 @@ public class SaleServiceImpl implements SaleService {
 
         Sale sale = new Sale();
         fillSaleFeatures(sale,request);
-        SaleResponse response = SaleResponse.convert(repository.save(sale));
+        SaleResponse response = ConverterResponse.convert(repository.save(sale));
 
         InvoiceRequest invoiceRequest = new InvoiceRequest(response.id(),response.description());
         invoiceService.createInvoice(invoiceRequest);
@@ -68,7 +69,7 @@ public class SaleServiceImpl implements SaleService {
     public SaleResponse updateSaleById(UUID id, SaleRequest request) {
         Sale sale = getSaleByIdInRepository(id);
         fillSaleFeatures(sale, request);
-        SaleResponse response = SaleResponse.convert(repository.save(sale));
+        SaleResponse response = ConverterResponse.convert(repository.save(sale));
         return response;
     }
 

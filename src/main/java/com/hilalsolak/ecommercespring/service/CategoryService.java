@@ -1,7 +1,7 @@
 package com.hilalsolak.ecommercespring.service;
 
-import com.hilalsolak.ecommercespring.dto.requests.CategoryRequest;
-import com.hilalsolak.ecommercespring.dto.responses.CategoryResponse;
+import com.hilalsolak.ecommercespring.model.dto.requests.CategoryRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.CategoryResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

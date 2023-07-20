@@ -1,9 +1,10 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
-import com.hilalsolak.ecommercespring.constants.GlobalConstants;
-import com.hilalsolak.ecommercespring.dto.responses.LoggerResponse;
-import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.model.Logger;
+import com.hilalsolak.ecommercespring.converters.ConverterResponse;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
+import com.hilalsolak.ecommercespring.model.dto.responses.LoggerResponse;
+import com.hilalsolak.ecommercespring.model.entities.Logger;
 import com.hilalsolak.ecommercespring.repository.LoggerRepository;
 import com.hilalsolak.ecommercespring.service.LoggerService;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class LoggerServiceImpl implements LoggerService {
 
     @Override
     public List<LoggerResponse> getAllLoggers() {
-        List<LoggerResponse> response = repository.findAll().stream().map(LoggerResponse::convert).toList();
+        List<LoggerResponse> response = repository.findAll().stream().map(ConverterResponse::convert).toList();
 
         return response;
     }
@@ -29,7 +30,7 @@ public class LoggerServiceImpl implements LoggerService {
     @Override
     public LoggerResponse getLoggerById(UUID id) {
         Logger logger = getLoggerByIdInRepository(id);
-        LoggerResponse response = LoggerResponse.convert(logger);
+        LoggerResponse response = ConverterResponse.convert(logger);
 
         return response;
     }

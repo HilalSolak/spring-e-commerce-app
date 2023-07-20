@@ -1,7 +1,6 @@
 package com.hilalsolak.ecommercespring.repository;
 
-import com.hilalsolak.ecommercespring.model.Category;
-import com.hilalsolak.ecommercespring.model.Payment;
+import com.hilalsolak.ecommercespring.model.entities.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

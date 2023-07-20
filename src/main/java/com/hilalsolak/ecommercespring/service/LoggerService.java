@@ -1,6 +1,6 @@
 package com.hilalsolak.ecommercespring.service;
 
-import com.hilalsolak.ecommercespring.dto.responses.LoggerResponse;
+import com.hilalsolak.ecommercespring.model.dto.responses.LoggerResponse;
 
 import java.util.List;
 import java.util.UUID;

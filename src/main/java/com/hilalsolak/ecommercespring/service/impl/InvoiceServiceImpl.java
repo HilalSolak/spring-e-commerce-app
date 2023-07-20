@@ -1,12 +1,13 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
-import com.hilalsolak.ecommercespring.constants.GlobalConstants;
-import com.hilalsolak.ecommercespring.dto.requests.InvoiceRequest;
-import com.hilalsolak.ecommercespring.dto.responses.InvoiceResponse;
-import com.hilalsolak.ecommercespring.exception.EntityAlreadyExistsException;
-import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.model.Invoice;
-import com.hilalsolak.ecommercespring.model.Sale;
+import com.hilalsolak.ecommercespring.converters.ConverterResponse;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityAlreadyExistsException;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
+import com.hilalsolak.ecommercespring.model.dto.requests.InvoiceRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.InvoiceResponse;
+import com.hilalsolak.ecommercespring.model.entities.Invoice;
+import com.hilalsolak.ecommercespring.model.entities.Sale;
 import com.hilalsolak.ecommercespring.repository.InvoiceRepository;
 import com.hilalsolak.ecommercespring.service.InvoiceService;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceResponse> getAllInvoices() {
-        List<InvoiceResponse> response = repository.findAll().stream().map(InvoiceResponse::convert).toList();
+        List<InvoiceResponse> response = repository.findAll().stream().map(ConverterResponse::convert).toList();
 
         return response;
     }
@@ -32,7 +33,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceResponse getInvoiceById(UUID id) {
         Invoice invoice = getInvoiceByIdInRepository(id);
-        InvoiceResponse response = InvoiceResponse.convert(invoice);
+        InvoiceResponse response = ConverterResponse.convert(invoice);
         return response;
     }
     @Override
@@ -40,7 +41,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         checkIfInvoiceAlreadyExists(request);
         Invoice invoice = new Invoice();
         fillInvoiceFeatures(invoice,request);
-        InvoiceResponse response = InvoiceResponse.convert(repository.save(invoice));
+        InvoiceResponse response = ConverterResponse.convert(repository.save(invoice));
 
         return response;
     }
@@ -50,7 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceResponse updateInvoiceById(UUID id, InvoiceRequest request) {
         Invoice invoice = getInvoiceByIdInRepository(id);
         fillInvoiceFeatures(invoice,request);
-        InvoiceResponse response = InvoiceResponse.convert(repository.save(invoice));
+        InvoiceResponse response = ConverterResponse.convert(repository.save(invoice));
 
         return response;
     }

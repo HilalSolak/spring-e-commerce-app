@@ -1,12 +1,13 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
-import com.hilalsolak.ecommercespring.constants.GlobalConstants;
-import com.hilalsolak.ecommercespring.dto.requests.PaymentRequest;
-import com.hilalsolak.ecommercespring.dto.responses.PaymentResponse;
-import com.hilalsolak.ecommercespring.exception.BalanceNotEnoughException;
-import com.hilalsolak.ecommercespring.exception.EntityAlreadyExistsException;
-import com.hilalsolak.ecommercespring.exception.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.model.Payment;
+import com.hilalsolak.ecommercespring.converters.ConverterResponse;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.BalanceNotEnoughException;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityAlreadyExistsException;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
+import com.hilalsolak.ecommercespring.model.dto.requests.PaymentRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.PaymentResponse;
+import com.hilalsolak.ecommercespring.model.entities.Payment;
 import com.hilalsolak.ecommercespring.repository.PaymentRepository;
 import com.hilalsolak.ecommercespring.service.PaymentService;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentResponse> getAllPayments() {
-        List<PaymentResponse> response = repository.findAll().stream().map(PaymentResponse::convert).toList();
+        List<PaymentResponse> response = repository.findAll().stream().map(ConverterResponse::convert).toList();
         return response;
     }
 
     @Override
     public PaymentResponse getPaymentById(UUID id) {
         Payment payment = getPaymentByIdInRepository(id);
-        PaymentResponse response = PaymentResponse.convert(payment);
+        PaymentResponse response = ConverterResponse.convert(payment);
 
         return response;
     }
@@ -46,7 +47,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         Payment payment = new Payment();
         fillPaymentFeatures(payment,request);
-        PaymentResponse response = PaymentResponse.convert(repository.save(payment));
+        PaymentResponse response = ConverterResponse.convert(repository.save(payment));
 
         return response;
     }
@@ -56,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentResponse updatePaymentById(UUID id, PaymentRequest request) {
         Payment payment = getPaymentByIdInRepository(id);
         fillPaymentFeatures(payment,request);
-        PaymentResponse response = PaymentResponse.convert(repository.save(payment));
+        PaymentResponse response = ConverterResponse.convert(repository.save(payment));
         return response;
     }
 

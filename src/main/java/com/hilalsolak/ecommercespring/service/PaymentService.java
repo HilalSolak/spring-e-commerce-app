@@ -1,7 +1,7 @@
 package com.hilalsolak.ecommercespring.service;
 
-import com.hilalsolak.ecommercespring.dto.requests.PaymentRequest;
-import com.hilalsolak.ecommercespring.dto.responses.PaymentResponse;
+import com.hilalsolak.ecommercespring.model.dto.requests.PaymentRequest;
+import com.hilalsolak.ecommercespring.model.dto.responses.PaymentResponse;
 
 import java.math.BigDecimal;
 import java.util.List;

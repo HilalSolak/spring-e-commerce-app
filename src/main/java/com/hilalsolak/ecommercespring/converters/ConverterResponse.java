@@ -18,7 +18,7 @@ public class ConverterResponse {
                 from.getDescription());
     }
     public static CategoryProductResponse convertCategoryProduct(Product from){
-        return new CategoryProductResponse(from.getId().toString(), from.getName(),from.getDescription());
+        return new CategoryProductResponse(from.getId().toString(),from.getCategory().getName(), from.getName(),from.getDescription());
     }
 
     public static PaymentResponse convert(Payment from){

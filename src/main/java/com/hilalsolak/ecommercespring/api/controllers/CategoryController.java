@@ -28,6 +28,7 @@ public class CategoryController {
     public CategoryResponse getCategoryById(@PathVariable UUID id){
         return service.getCategoryById(id);
     }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse createCategory(@RequestBody CategoryRequest request){

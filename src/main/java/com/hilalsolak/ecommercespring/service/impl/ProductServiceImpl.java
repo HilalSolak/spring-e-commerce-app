@@ -82,6 +82,18 @@ public class ProductServiceImpl implements ProductService {
 
         repository.delete(product);
     }
+
+    @Override
+    public void increaseProductSearchCount(String productName) {
+        Product productByName = repository.findProductByName(productName);
+        if(productByName.getSearchCount() == null) {
+            productByName.setSearchCount(0);
+        }
+        Integer searchCount = productByName.getSearchCount();
+        productByName.setSearchCount(++searchCount);
+        repository.save(productByName);
+    }
+
     private Product getProductByIdInRepository(UUID id){
 
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND));

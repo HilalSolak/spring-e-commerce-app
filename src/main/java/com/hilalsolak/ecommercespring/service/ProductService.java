@@ -14,5 +14,8 @@ public interface ProductService  {
     ProductResponse createProduct(ProductRequest request);
 
     ProductResponse updateProductById(UUID id, ProductRequest request);
+
     void deleteProductById(UUID id);
+
+    void increaseProductSearchCount(String productName);
 }

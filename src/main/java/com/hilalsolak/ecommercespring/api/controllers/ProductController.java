@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -39,6 +39,11 @@ public class ProductController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     ProductResponse updateProductById(@PathVariable UUID id,@RequestBody ProductRequest request){
         return service.updateProductById(id,request);
+    }
+    @PutMapping("/increase/{productName}")
+    @ResponseStatus(HttpStatus.OK)
+    public void increaseProductSearchCount(@PathVariable String productName){
+        service.increaseProductSearchCount(productName);
     }
 
     @DeleteMapping("/{id}")

@@ -1,14 +1,14 @@
 package com.hilalsolak.ecommercespring.service.impl;
 
 import com.hilalsolak.ecommercespring.converters.ConverterResponse;
-import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityAlreadyExistsException;
-import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
-import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
 import com.hilalsolak.ecommercespring.model.dto.requests.CategoryRequest;
 import com.hilalsolak.ecommercespring.model.dto.responses.CategoryResponse;
 import com.hilalsolak.ecommercespring.model.entities.Category;
 import com.hilalsolak.ecommercespring.repository.CategoryRepository;
 import com.hilalsolak.ecommercespring.service.CategoryService;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityAlreadyExistsException;
+import com.hilalsolak.ecommercespring.utils.advice.exceptions.EntityNotFoundException;
+import com.hilalsolak.ecommercespring.utils.constants.GlobalConstants;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +19,6 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     public CategoryServiceImpl(CategoryRepository repository) {
         this.repository = repository;
-
     }
 
     @Override
@@ -68,11 +67,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getCategoriesBySearchText(String filter) {
 
-        List<CategoryResponse> responseList = repository.findAll().stream().filter(category -> category.getName()
+        List<CategoryResponse> responseList = repository.findAllByNameAsc().stream().filter(category -> category.getName()
                 .startsWith(filter)).map(ConverterResponse::convert).toList();
 
         return responseList;
     }
+
 
 
     private Category getCategoryByIdInRepository(UUID id){

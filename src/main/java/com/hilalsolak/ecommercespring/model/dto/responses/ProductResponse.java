@@ -10,5 +10,4 @@ public record ProductResponse(UUID id,
                               int quantity,
                               CategoryResponse category) {
 
-
 }
